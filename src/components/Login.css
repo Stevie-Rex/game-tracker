@@ -1,0 +1,110 @@
+.login-page {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 32px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.login-card h1 {
+  font-size: 22px;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.login-tabs {
+  display: flex;
+  border-radius: 8px;
+  background: var(--bg);
+  padding: 4px;
+  gap: 4px;
+}
+
+.login-tabs button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+}
+
+.login-tabs button.active {
+  background: var(--accent);
+  color: #08060d;
+}
+
+.login-card label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.login-card input {
+  font: inherit;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.login-submit,
+.login-google {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font: inherit;
+}
+
+.login-submit {
+  background: var(--accent);
+  color: #08060d;
+  border: none;
+}
+
+.login-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-google {
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.login-divider {
+  text-align: center;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.login-error {
+  color: #ff8080;
+  font-size: 13px;
+  margin: 0;
+}
+
+.login-info {
+  color: var(--accent);
+  font-size: 13px;
+  margin: 0;
+}

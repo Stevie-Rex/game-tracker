@@ -1,14 +1,44 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
-import { STATUS_LABELS, listGames } from '../lib/games'
+import { listGames } from '../lib/games'
 import type { Game } from '../lib/games'
 import { AddGame } from './AddGame'
+import { GameTile } from './GameTile'
+import { StatusColumns } from './StatusColumns'
 import './Library.css'
+
+type LibraryView = 'grid' | 'columns'
+
+const VIEW_STORAGE_KEY = 'game-tracker:library-view'
+
+// localStorage can throw (private mode, blocked storage); the view choice is
+// just a convenience, so fall back to the grid and ignore write failures.
+function loadStoredView(): LibraryView {
+  try {
+    return localStorage.getItem(VIEW_STORAGE_KEY) === 'columns' ? 'columns' : 'grid'
+  } catch {
+    return 'grid'
+  }
+}
+
+function storeView(view: LibraryView) {
+  try {
+    localStorage.setItem(VIEW_STORAGE_KEY, view)
+  } catch {
+    // Not critical; the choice just won't persist.
+  }
+}
 
 export function Library() {
   const [games, setGames] = useState<Game[] | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [addingGame, setAddingGame] = useState(false)
+  const [view, setView] = useState<LibraryView>(loadStoredView)
+
+  function changeView(next: LibraryView) {
+    setView(next)
+    storeView(next)
+  }
 
   // Bumped after adding a game so the effect below refetches the list.
   const [reloadKey, setReloadKey] = useState(0)
@@ -56,13 +86,36 @@ export function Library() {
       )}
 
       {games && games.length > 0 && (
-        <ul className="library-grid">
-          {games.map((game) => (
-            <li key={game.id}>
-              <GameTile game={game} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <div className="library-view-toggle" role="group" aria-label="Library view">
+            <button
+              type="button"
+              aria-pressed={view === 'grid'}
+              onClick={() => changeView('grid')}
+            >
+              Grid
+            </button>
+            <button
+              type="button"
+              aria-pressed={view === 'columns'}
+              onClick={() => changeView('columns')}
+            >
+              Columns
+            </button>
+          </div>
+
+          {view === 'grid' ? (
+            <ul className="library-grid">
+              {games.map((game) => (
+                <li key={game.id}>
+                  <GameTile game={game} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <StatusColumns games={games} />
+          )}
+        </>
       )}
 
       {addingGame && (
@@ -75,23 +128,5 @@ export function Library() {
         />
       )}
     </div>
-  )
-}
-
-function GameTile({ game }: { game: Game }) {
-  return (
-    <article className="game-tile" title={`${game.title} · ${game.platform}`}>
-      {game.cover_url ? (
-        <img src={game.cover_url} alt="" loading="lazy" />
-      ) : (
-        <div className="game-tile-placeholder" aria-hidden="true">
-          {game.title}
-        </div>
-      )}
-      <div className="game-tile-overlay">
-        <h2>{game.title}</h2>
-        <span className={`game-tile-status status-${game.status}`}>{STATUS_LABELS[game.status]}</span>
-      </div>
-    </article>
   )
 }

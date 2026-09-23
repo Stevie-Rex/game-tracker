@@ -1,0 +1,81 @@
+.status-columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+/* Too narrow for four columns side by side: scroll them horizontally,
+   one column (plus a peek of the next) per screen. */
+@media (max-width: 899px) {
+  .status-columns {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82%, 340px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin: 0 -16px;
+    padding: 0 16px 8px;
+    scroll-padding: 0 16px;
+  }
+
+  .status-column {
+    scroll-snap-align: start;
+  }
+}
+
+.status-column {
+  min-width: 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--status-color, var(--border));
+}
+
+.status-column.status-backlog {
+  --status-color: #9ca3af;
+}
+
+.status-column.status-playing {
+  --status-color: #60a5fa;
+}
+
+.status-column.status-completed {
+  --status-color: #4ade80;
+}
+
+.status-column.status-dropped {
+  --status-color: #f87171;
+}
+
+.status-column-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.status-column-count {
+  font-size: 12px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.status-column-empty {
+  padding: 24px 0;
+  text-align: center;
+  font-size: 13px;
+}
+
+.status-column-games {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px;
+}

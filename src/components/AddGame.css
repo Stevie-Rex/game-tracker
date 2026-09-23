@@ -1,0 +1,185 @@
+.add-game {
+  width: min(520px, calc(100vw - 32px));
+  max-height: calc(100svh - 32px);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.add-game::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.add-game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.add-game-header h2 {
+  font-size: 18px;
+}
+
+.add-game-close {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.add-game input,
+.add-game select {
+  font: inherit;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.add-game-results {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.add-game-results button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-h);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.add-game-results button:hover:not(:disabled),
+.add-game-results button:focus-visible {
+  background: var(--accent-bg);
+}
+
+.add-game-result-name {
+  flex: 1;
+}
+
+.add-game-result-year {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.add-game-cover {
+  flex: none;
+  width: 36px;
+  height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+  background: var(--bg);
+}
+
+.add-game-cover-large {
+  width: 96px;
+  height: 128px;
+}
+
+.add-game-cover-missing {
+  display: inline-block;
+  border: 1px solid var(--border);
+}
+
+.add-game-hint {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.add-game-error {
+  margin-top: 12px;
+  color: #ff8080;
+  font-size: 13px;
+}
+
+.add-game-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.add-game-confirm label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.add-game-summary {
+  display: flex;
+  gap: 16px;
+}
+
+.add-game-summary h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.add-game-summary p {
+  font-size: 14px;
+}
+
+.add-game-ttb {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2px 12px;
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+
+.add-game-ttb dd {
+  margin: 0;
+  color: var(--text-h);
+}
+
+.add-game-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.add-game-primary,
+.add-game-secondary {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.add-game-primary {
+  border: none;
+  background: var(--accent);
+  color: #08060d;
+}
+
+.add-game-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.add-game-secondary {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+}

@@ -104,10 +104,16 @@ interface IgdbTimeToBeat {
   completely?: number
 }
 
+// IGDB game_type ids worth adding to a backlog: main game, standalone
+// expansion, remake, remaster, expanded game, port. Leaves out DLC, bundles,
+// mods, episodes, etc., which otherwise crowd out the base game. Also skips
+// editions (Deluxe, Limited...), which point at the base game via version_parent.
+const PLAYABLE_GAME_TYPES = '(0,4,8,9,10,11)'
+
 async function handleSearch(query: string) {
   const games = (await igdbFetch(
     'games',
-    `search "${escapeApicalypseString(query)}"; fields name,cover.url,first_release_date; limit 20;`,
+    `search "${escapeApicalypseString(query)}"; fields name,cover.url,first_release_date; where game_type = ${PLAYABLE_GAME_TYPES} & version_parent = null; limit 20;`,
   )) as IgdbGame[]
 
   return games.map((game) => ({

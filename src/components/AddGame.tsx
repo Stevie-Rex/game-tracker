@@ -16,6 +16,7 @@ interface AddGameProps {
 
 export function AddGame({ onClose, onAdded }: AddGameProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const searchRef = useRef<HTMLInputElement>(null)
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<IgdbSearchResult[]>([])
   const [searching, setSearching] = useState(false)
@@ -25,6 +26,9 @@ export function AddGame({ onClose, onAdded }: AddGameProps) {
 
   useEffect(() => {
     dialogRef.current?.showModal()
+    // showModal() moves focus to the first focusable element (the close
+    // button), overriding autoFocus, so a typed space would close the dialog.
+    searchRef.current?.focus()
   }, [])
 
   const trimmedQuery = query.trim()
@@ -92,10 +96,10 @@ export function AddGame({ onClose, onAdded }: AddGameProps) {
       ) : (
         <>
           <input
+            ref={searchRef}
             type="search"
             className="add-game-search"
             placeholder="Search by title…"
-            autoFocus
             value={query}
             onChange={(e) => handleQueryChange(e.target.value)}
           />

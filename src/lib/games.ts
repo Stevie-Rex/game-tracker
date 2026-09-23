@@ -31,3 +31,31 @@ export async function addGameFromIgdb(
   })
   if (error) throw error
 }
+
+export interface Game {
+  id: string
+  title: string
+  platform: string
+  genres: string[]
+  cover_url: string | null
+  status: GameStatus
+  igdb_id: number | null
+  time_to_beat_main: number | null
+  time_to_beat_extra: number | null
+  time_to_beat_completionist: number | null
+  rating: number | null
+  review: string | null
+  backlog_order: number | null
+  created_at: string
+  updated_at: string
+}
+
+export async function listGames(): Promise<Game[]> {
+  // RLS already limits rows to the signed-in user's games.
+  const { data, error } = await supabase
+    .from('games')
+    .select('*')
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data as Game[]
+}
